@@ -10,23 +10,12 @@ const initialTodoList = [
 ];
 
 function TodoApp() {
-    const [todo, setTodo] = useState("");
-    const [todoList, setTodoList] = useState(initialTodoList);
-
-    function handleInputChange(e) {
-        setTodo(e.target.value);
-    }
-
-    function addTodo(e) {
-        e.preventDefault();
-        setTodoList([...todoList, todo]);
-        setTodo("");
-    }
-
-    function handleRemoveClick(todoIndex) {
-        const newTodoList = todoList.filter((_, index) => index !== todoIndex);
-        setTodoList(newTodoList);
-    }
+    const [
+        todo,
+        todoList,
+        handleRemoveClick,
+        handleInputChange,
+        addTodo] = useTodoState();
 
     return (
         <section>
@@ -47,6 +36,34 @@ function TodoApp() {
             </Form>
         </section>
     );
+}
+
+function useTodoState() {
+    const [todo, setTodo] = useState("");
+    const [todoList, setTodoList] = useState(initialTodoList);
+
+    function handleInputChange(e) {
+        setTodo(e.target.value);
+    }
+
+    function addTodo(e) {
+        e.preventDefault();
+        setTodoList([...todoList, todo]);
+        setTodo("");
+    }
+
+    function handleRemoveClick(todoIndex) {
+        const newTodoList = todoList.filter((_, index) => index !== todoIndex);
+        setTodoList(newTodoList);
+    }
+
+    return [
+        todo,
+        todoList,
+        handleRemoveClick,
+        handleInputChange,
+        addTodo
+    ];
 }
 
 const rootElement = document.getElementById("root");
