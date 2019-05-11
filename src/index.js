@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import {Button, Form, Input, InputGroup, ListGroup, ListGroupItem} from "reactstrap";
@@ -10,17 +10,30 @@ const initialTodoList = [
 ];
 
 function TodoApp() {
+    const [todo, setTodo] = useState("");
+    const [todoList, setTodoList] = useState(initialTodoList);
+
+    function handleInputChange(e) {
+        setTodo(e.target.value);
+    }
+
+    function addTodo(e) {
+        e.preventDefault();
+        setTodoList([...todoList, todo]);
+        setTodo("");
+    }
+
     return (
         <section>
             <h1>TODO</h1>
             <ListGroup>
-                {initialTodoList.map((item, i) => {
+                {todoList.map((item, i) => {
                     return <ListGroupItem key={i}>{item}</ListGroupItem>;
                 })}
             </ListGroup>
-            <Form>
+            <Form onSubmit={addTodo}>
                 <InputGroup>
-                    <Input/>
+                    <Input value={todo} onChange={handleInputChange}/>
                     <Button>Add</Button>
                 </InputGroup>
             </Form>
