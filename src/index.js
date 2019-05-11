@@ -23,12 +23,20 @@ function TodoApp() {
         setTodo("");
     }
 
+    function handleRemoveClick(todoIndex) {
+        const newTodoList = todoList.filter((_, index) => index !== todoIndex);
+        setTodoList(newTodoList);
+    }
+
     return (
         <section>
             <h1>TODO</h1>
             <ListGroup>
                 {todoList.map((item, i) => {
-                    return <ListGroupItem key={i}>{item}</ListGroupItem>;
+                    return <ListGroupItem key={i}>
+                        {item}
+                        <Button close onClick={() => handleRemoveClick(i)}/>
+                    </ListGroupItem>;
                 })}
             </ListGroup>
             <Form onSubmit={addTodo}>
@@ -43,9 +51,3 @@ function TodoApp() {
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<TodoApp/>, rootElement);
-
-// Complete hooks demo
-// https://fb.me/f8-react-hooks-complete
-
-// Class example
-// https://fb.me/f8-react-hooks-class
